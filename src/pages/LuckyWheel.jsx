@@ -1,5 +1,5 @@
 /* Lucky Wheel Page */
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useGame } from '../context/GameContext'
 import { playClick, playWhoosh, playCelebration } from '../utils/sounds'
@@ -23,7 +23,6 @@ export default function LuckyWheel() {
   const [result, setResult] = useState(null)
   const game = useGame()
   const confetti = useConfetti()
-  const spinsRef = useRef(game.wheelSpins || 0)
 
   const spin = () => {
     if (spinning) return
@@ -42,9 +41,8 @@ export default function LuckyWheel() {
       setSpinning(false)
       setResult(PRIZES[selectedIndex])
       PRIZES[selectedIndex].action(game)
-      spinsRef.current += 1
       game.incrementWheelSpins()
-      if (spinsRef.current >= 5) game.unlockAchievement('lucky_spinner')
+      if ((game.wheelSpins || 0) + 1 >= 5) game.unlockAchievement('lucky_spinner')
       if (selectedIndex !== 6) { playCelebration(); confetti.fire() }
     }, 4500)
   }

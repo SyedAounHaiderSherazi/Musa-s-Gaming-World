@@ -1,11 +1,11 @@
 /* Intro cinematic sounds - Web Audio API, no external files */
 
-let ctx = null
+import { getAudioContext } from './sounds'
 
 function getCtx() {
-  if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)()
-  if (ctx.state === 'suspended') ctx.resume()
-  return ctx
+  const c = getAudioContext()
+  if (c.state === 'suspended') c.resume()
+  return c
 }
 
 function pad(freq, duration, vol = 0.12, type = 'sine') {

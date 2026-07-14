@@ -397,16 +397,10 @@ export default function CinematicIntro({ onComplete }) {
   const timersRef = useRef([])
 
   const handleStart = () => {
-    // Resume both audio contexts (intro + main sounds)
+    // Resume the shared audio context
     try {
       const mainCtx = getAudioContext()
       if (mainCtx.state === 'suspended') mainCtx.resume()
-    } catch (_) {}
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext
-      const testCtx = new AudioContext()
-      if (testCtx.state === 'suspended') testCtx.resume()
-      testCtx.close()
     } catch (_) {}
     setStarted(true)
   }

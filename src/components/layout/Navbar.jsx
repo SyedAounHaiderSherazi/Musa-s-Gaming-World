@@ -9,12 +9,15 @@ import PlayerProfile from '../ui/PlayerProfile'
 const NAV_LINKS = [
   { path: '/', label: 'Lobby', icon: '🏠' },
   { path: '/games', label: 'Games', icon: '🎮' },
+  { path: '/fighting', label: 'Fighting', icon: '⚔️' },
+  { path: '/meet-musa', label: 'Musa', icon: '😎' },
   { path: '/fun-zone', label: 'Fun Zone', icon: '🧩' },
+  { path: '/music', label: 'Music', icon: '🎵' },
   { path: '/roblox', label: 'Roblox', icon: '⭐' },
   { path: '/wheel', label: 'Wheel', icon: '🎡' },
   { path: '/gallery', label: 'Gallery', icon: '📸' },
-  { path: '/drawing', label: 'Drawing', icon: '✏️' },
   { path: '/achievements', label: 'Achievements', icon: '🏆' },
+  { path: '/profile', label: 'Profile', icon: '👤' },
 ]
 
 export default function Navbar() {

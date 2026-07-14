@@ -7,9 +7,12 @@ import { playClick, playCelebration } from '../utils/sounds'
 import GlassPanel from '../components/ui/GlassPanel'
 import Confetti, { useConfetti } from '../components/ui/Confetti'
 import Fireworks from '../components/ui/Fireworks'
+import MusaAvatar from '../components/ui/MusaAvatar'
 
 const PORTALS = [
-  { path: '/games', icon: '🎮', title: 'Mini Games', desc: 'Play 8+ awesome games!', color: '#00d4ff', gradient: 'from-[#00d4ff] to-[#0088ff]' },
+  { path: '/games', icon: '🎮', title: 'Mini Games', desc: '50+ awesome games!', color: '#00d4ff', gradient: 'from-[#00d4ff] to-[#0088ff]' },
+  { path: '/fighting', icon: '⚔️', title: 'Fighting Games', desc: 'Cartoon battles!', color: '#ff0044', gradient: 'from-[#ff0044] to-[#ff00ff]' },
+  { path: '/meet-musa', icon: '😎', title: 'Meet Musa', desc: 'Get to know me!', color: '#00ff88', gradient: 'from-[#00ff88] to-[#00aa88]' },
   { path: '/fun-zone', icon: '🧩', title: 'Fun Zone', desc: 'Jokes, facts, and magic!', color: '#ff00ff', gradient: 'from-[#ff00ff] to-[#aa00ff]' },
   { path: '/drawing', icon: '✏️', title: 'Drawing Studio', desc: 'Create awesome art!', color: '#00ff88', gradient: 'from-[#00ff88] to-[#00aa88]' },
   { path: '/achievements', icon: '🏆', title: 'Achievement Hall', desc: 'View your badges!', color: '#ffee00', gradient: 'from-[#ffee00] to-[#ff8800]' },
@@ -27,7 +30,6 @@ export default function Home() {
   const { addCoins, addXP, dailyRewardClaimed, claimDailyReward, player } = useGame()
   const [showDailyReward, setShowDailyReward] = useState(false)
   const [dailyRewardContent, setDailyRewardContent] = useState(null)
-  const [showTreasure, setShowTreasure] = useState(false)
   const confetti = useConfetti()
   const [fireworksActive, setFireworksActive] = useState(false)
 
@@ -48,7 +50,6 @@ export default function Home() {
   const today = new Date().toDateString()
   const canClaimDaily = dailyRewardClaimed !== today
 
-  // Secret click counter
   const [secretClicks, setSecretClicks] = useState(0)
   const handleSecretClick = () => {
     const newCount = secretClicks + 1
@@ -64,73 +65,112 @@ export default function Home() {
       <Confetti active={confetti.active} />
       <Fireworks active={fireworksActive} />
 
-      {/* Hero Section */}
+      {/* Hero Section - Musa as the main character */}
       <motion.section
-        className="max-w-6xl mx-auto text-center mb-12 relative"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        className="max-w-6xl mx-auto mb-16 relative"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
       >
-        {/* Floating game icons */}
-        {['🎮', '🎲', '🎯', '🏆', '⭐', '🎨', '🧩', '🎵'].map((icon, i) => (
-          <motion.span
-            key={i}
-            className="absolute text-2xl opacity-20 pointer-events-none"
-            style={{
-              left: `${10 + (i * 12)}%`,
-              top: `${(i % 2) * 30}px`,
-            }}
-            animate={{
-              y: [0, -15, 0],
-              rotate: [0, 10, -10, 0],
-            }}
-            transition={{ duration: 3 + i * 0.5, repeat: Infinity, delay: i * 0.3 }}
-          >
-            {icon}
-          </motion.span>
-        ))}
+        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
 
-        <motion.div
-          className="text-7xl md:text-8xl mb-6 inline-block"
-          animate={{ y: [0, -10, 0], rotate: [0, 2, -2, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
-        >
-          🎮
-        </motion.div>
+          {/* Left: Hero Portrait */}
+          <div className="relative shrink-0">
+            {/* Animated background ring */}
+            <motion.div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: 'conic-gradient(from 0deg, #00d4ff, #ff00ff, #00ff88, #ffee00, #00d4ff)',
+                filter: 'blur(20px)',
+                opacity: 0.3,
+              }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+            />
 
-        <h1
-          className="text-4xl md:text-6xl font-bold mb-4"
-          style={{ fontFamily: "'Fredoka One', cursive" }}
-        >
-          <span className="text-gradient">Welcome to My</span>
-          <br />
-          <span className="text-gradient-warm">Awesome Gaming World!</span>
-        </h1>
+            {/* Floating particles around portrait */}
+            {Array.from({ length: 8 }).map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full"
+                style={{
+                  width: 6,
+                  height: 6,
+                  background: ['#00d4ff', '#ff00ff', '#00ff88', '#ffee00'][i % 4],
+                  left: `${50 + 55 * Math.cos(i * Math.PI / 4)}%`,
+                  top: `${50 + 55 * Math.sin(i * Math.PI / 4)}%`,
+                }}
+                animate={{ y: [0, -10, 0], opacity: [0.3, 0.8, 0.3], scale: [0.8, 1.2, 0.8] }}
+                transition={{ duration: 2, repeat: Infinity, delay: i * 0.25 }}
+              />
+            ))}
 
-        <p className="text-white/60 text-lg mb-8 max-w-lg mx-auto">
-          Hey <span className="text-[#00d4ff] font-bold">Syed Musa Hassan</span>! Ready for an epic adventure?
-          Play games, earn coins, and discover secrets!
-        </p>
+            {/* The portrait */}
+            <MusaAvatar src="/images/musa/avatar.jpeg" size={192} glowing ring ringColor="#00d4ff" floating />
+          </div>
+
+          {/* Right: Welcome text */}
+          <div className="text-center md:text-left">
+            <motion.h1
+              className="text-4xl md:text-6xl font-bold mb-4"
+              style={{ fontFamily: "'Fredoka One', cursive" }}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <span className="text-gradient">Welcome,</span>
+              <br />
+              <span className="text-gradient-warm">Syed Musa Hassan!</span>
+            </motion.h1>
+            <motion.p
+              className="text-white/60 text-lg mb-6 max-w-md"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              Ready for another adventure? Play <span className="text-[#ff00ff] font-bold">50+ games</span>,
+              earn coins, and unlock achievements!
+            </motion.p>
+            <motion.button
+              className="px-8 py-4 rounded-xl font-bold text-white text-lg cursor-pointer border-none"
+              style={{
+                background: 'linear-gradient(135deg, #00d4ff, #ff00ff)',
+                boxShadow: '0 0 30px rgba(0,212,255,0.3), 0 0 60px rgba(255,0,255,0.15)',
+              }}
+              whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(0,212,255,0.5), 0 0 80px rgba(255,0,255,0.25)' }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              onClick={() => navigate('/games')}
+            >
+              🚀 Start Playing!
+            </motion.button>
+          </div>
+        </div>
 
         {/* Daily Reward */}
         {canClaimDaily && (
-          <motion.button
+          <motion.div
+            className="text-center mt-8"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={claimDaily}
-            className="mb-6 px-6 py-3 rounded-2xl font-bold text-white border-none cursor-pointer text-base"
-            style={{
-              background: 'linear-gradient(135deg, #ffee00, #ff8800)',
-              boxShadow: '0 0 30px rgba(255,238,0,0.3)',
-            }}
+            transition={{ delay: 0.8 }}
           >
-            🎁 Claim Daily Reward!
-          </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={claimDaily}
+              className="px-6 py-3 rounded-2xl font-bold text-white border-none cursor-pointer text-base"
+              style={{
+                background: 'linear-gradient(135deg, #ffee00, #ff8800)',
+                boxShadow: '0 0 30px rgba(255,238,0,0.3)',
+              }}
+            >
+              🎁 Claim Daily Reward!
+            </motion.button>
+          </motion.div>
         )}
 
-        {/* Daily Reward Modal */}
         <AnimatePresence>
           {showDailyReward && dailyRewardContent && (
             <motion.div

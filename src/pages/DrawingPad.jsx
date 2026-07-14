@@ -13,7 +13,7 @@ export default function DrawingPad() {
   const [color, setColor] = useState('#00d4ff')
   const [brushSize, setBrushSize] = useState(5)
   const [tool, setTool] = useState('brush')
-  const [lastPos, setLastPos] = useState(null)
+  const lastPosRef = useRef(null)
   const { addXP, addCoins, unlockAchievement } = useGame()
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function DrawingPad() {
     e.preventDefault()
     setIsDrawing(true)
     const pos = getPos(e)
-    setLastPos(pos)
+    lastPosRef.current = pos
     const ctx = canvasRef.current.getContext('2d')
     ctx.beginPath()
     ctx.arc(pos.x, pos.y, brushSize / 2, 0, Math.PI * 2)
@@ -54,17 +54,19 @@ export default function DrawingPad() {
     if (!isDrawing) return
     e.preventDefault()
     const pos = getPos(e)
+    const lp = lastPosRef.current
+    if (!lp) return
     const ctx = canvasRef.current.getContext('2d')
     ctx.beginPath()
-    ctx.moveTo(lastPos.x, lastPos.y)
+    ctx.moveTo(lp.x, lp.y)
     ctx.lineTo(pos.x, pos.y)
     ctx.strokeStyle = tool === 'eraser' ? '#0a0a2e' : color
     ctx.lineWidth = tool === 'eraser' ? brushSize * 3 : brushSize
     ctx.lineCap = 'round'
     ctx.lineJoin = 'round'
     ctx.stroke()
-    setLastPos(pos)
-  }, [isDrawing, lastPos, color, brushSize, tool])
+    lastPosRef.current = pos
+  }, [isDrawing, color, brushSize, tool])
 
   const stopDraw = () => setIsDrawing(false)
 

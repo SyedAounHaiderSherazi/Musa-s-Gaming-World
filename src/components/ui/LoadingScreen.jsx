@@ -1,6 +1,7 @@
 /* Loading Screen */
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import MusaAvatar from './MusaAvatar'
 
 const LOADING_TIPS = [
   "Loading awesome games...",
@@ -80,9 +81,16 @@ export default function LoadingScreen({ onComplete }) {
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-          className="text-8xl mb-8"
+          className="mb-8"
         >
-          🎮
+          <div className="mb-4 relative">
+            <motion.div className="absolute inset-0 rounded-full" style={{
+              background: 'conic-gradient(from 0deg, #00d4ff, #ff00ff, #00ff88, #ffee00, #00d4ff)',
+              filter: 'blur(15px)', opacity: 0.4,
+            }} animate={{ rotate: 360 }} transition={{ duration: 4, repeat: Infinity, ease: 'linear' }} />
+            <MusaAvatar src="/images/musa/avatar.jpeg" size={96} glowing ring />
+          </div>
+          <div className="text-8xl">🎮</div>
         </motion.div>
 
         <motion.h1
