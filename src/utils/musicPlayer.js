@@ -2,12 +2,12 @@
 /* Playlist management, auto-switching by route, fade transitions */
 
 const PLAYLIST = [
-  { id: 'intro', file: '/music/intro.mp3', title: 'Intro', context: 'intro' },
-  { id: 'lobby', file: '/music/lobby.mp3', title: 'Lobby', context: 'lobby' },
-  { id: 'battle', file: '/music/battle.mp3', title: 'Battle', context: 'battle' },
-  { id: 'happy', file: '/music/happy.mp3', title: 'Happy', context: 'happy' },
-  { id: 'victory', file: '/music/victory.mp3', title: 'Victory', context: 'victory' },
-  { id: 'secret', file: '/music/secret.mp3', title: 'Secret', context: 'secret' },
+  { id: 'intro', file: '/music/Winning Speech (Music Video) Karan Aujla  Mxrci  Latest Punjabi Songs 2024.mp3', title: 'Winning Speech', context: 'intro' },
+  { id: 'lobby', file: '/music/Shubh - Balenci (Official Music Video).mp3', title: 'Balenci', context: 'lobby' },
+  { id: 'battle', file: '/music/Rebel (Official Audio) Cheema Y  Gur Sidhu.mp3', title: 'Rebel', context: 'battle' },
+  { id: 'happy', file: '/music/LOW FADE (Music Video) KARAN AUJLA.mp3', title: 'Low Fade', context: 'happy' },
+  { id: 'victory', file: '/music/Winning Speech (Music Video) Karan Aujla  Mxrci  Latest Punjabi Songs 2024.mp3', title: 'Winning Speech', context: 'victory' },
+  { id: 'secret', file: '/music/Shubh - Balenci (Official Music Video).mp3', title: 'Balenci', context: 'secret' },
 ]
 
 let currentAudio = null
